@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block header %}
+<h3 class="text-center mb-2">Home</h3>
+{% endblock %}
+
+{% block content %}
+<div class="container-md">
+    <h2>Your points: {{total_points}}</h2>
+    <h4>Your Point Activity</h4>
+    {% for task in taskdetails %}
+    <p class="mb-0 mt-3 text-center">{{task.created_at}}</p>
+    <div class="card shadow-sm p-3 bg-body rounded mb-4" data-task-id="{{ task.id }}">
+        <button type="button" class="btn btn-light delete-btn"><i class="bi bi-trash3-fill"></i></button>
+        <div class="row g-0 p-3">
+            <div class="col-md-2 col-sm-3 col-xs-12 d-flex align-items-center justify-content-center">
+                <h2 style="color: #fea116;"><i class="bi bi-plus"></i>{{task.app.points}}</h2>
+                <!-- <img src="{{ app.icon }}" alt="{{ app.name }}" style="width: 100%;"> -->
+            </div>
+            <div class="col-md-6 col-sm-5 col-xs-12 d-flex align-items-center">
+                <div class="card-body">
+                    <h4 class="card-title mb-0">{{ task.app.name }}</h4>
+                    <small class="details_link"><a href="{{ task.app.download_link }}">{{ task.app.download_link }}</a></small><br>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12 d-flex align-items-center justify-content-center">
+                <img src="{{ task.screenshot }}" alt="{{ task.app.name }}" style="width: 40%;">
+            </div>
+            
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="modal" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this task?</p>
+          <p>Note that the points accumulated by submitting the task will be reduced from the total points.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" id="confirm-delete-btn">Yes</button>
+        </div>
+      </div>
+    </div>
+</div>
+  
+{% endblock %}
+
+
+
+{% block scripts %}
+<script>
+    let taskToDelete = null;
+
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+    document.querySelectorAll('.delete-btn').forEach((button) => {
+        button.addEventListener('click', function() {
+            taskToDelete = this.closest('.card');
+            
+            deleteModal.show();
+        });
+    });
+
+    document.getElementById('confirm-delete-btn').addEventListener('click', function() {
+        if (taskToDelete) {
+            const taskId = taskToDelete.getAttribute('data-task-id'); 
+            const access_token = localStorage.getItem('access_token')
+
+            fetch(`{% url 'taskdetails' %}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer $`+localStorage.getItem('access_token'),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 'task_id': taskId })
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload()
+                    deleteModal.hide();
+                } else {
+                    console.error('Failed to delete the task.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    });
+</script>
+
+
+{% endblock %}

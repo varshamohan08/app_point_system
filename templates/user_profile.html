@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+User Profile
+{% endblock %}
+
+{% block header %}
+<h3 class="text-center mb-3">User Profile</h3>
+{% endblock %}
+
+{% block content %}
+<div class="container-md">
+    <div class="card shadow-sm p-3 mb-5 bg-body rounded">
+        <div class="row justify-content-center">
+            {% if user.userdetails.profile_pic %}<img class="details-image-preview rounded-2" src="{{ user.userdetails.profile_pic }}" alt="User profile picture">{% endif %}
+            {% if not user.userdetails.profile_pic %}<img class="details-image-preview rounded-2" src="{{ user.userdetails.profile_pic }}" alt="User profile picture">{% endif %}
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-12">
+                <label class="fw-light fs-6" for="app_title"><small>Name</small></label>
+                <p class="text-break" id="app_title">{{user.first_name}} {{user.last_name}}</p>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="fw-light fs-6" for="app_link"><small>Email</small></label>
+                <p class="text-break" id="app_link">{{user.email}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

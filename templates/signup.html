@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Login</title>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .btn-primary {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .form-check-label {
+            font-size: 0.9rem;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+        <h3 class="text-center mb-2">Sign Up</h3>
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            <ul class="m-0">
+                {% for error_list in error.values %}
+                    {% for message in error_list %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <form method="post" action="{% url 'signup' %}" class="was-validated">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="first_name" class="form-label">First name</label>
+              <input type="text" class="form-control" id="first_name" name="first_name" required>
+            </div>
+            <div class="mb-3">
+              <label for="last_name" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="last_name" name="last_name" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+        <div class="my-1">
+            <label class="form-check-label" for="dropdownCheck2">
+                Already have an account? <a href="{% url 'login' %}">Sign in</a>
+            </label>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('in');
+          const userDetails = "{{ user_details|safe }}";
+          const accessToken = "{{ access_token }}";
+          console.log(userDetails, accessToken);
+          if (accessToken || localStorage.setItem('userdetails')) {
+              localStorage.setItem('userdetails', userDetails);
+              localStorage.setItem('access_token', accessToken);
+              // window.location.href = "{% url 'appdetails' %}"; // Adjust the URL name if needed
+              // Define the URL for your GET request
+              const apiUrl = "{% url 'appdetails' %}";
+              window.location.href = apiUrl
+
+              // Perform the GET request with Authorization header
+              // fetch(apiUrl, {
+              //   method: 'GET',
+              //   headers: {
+              //     'Authorization': `Bearer ${{ access_token }}`,
+              //     'Content-Type': 'application/json'
+              //   }
+              // })
+              // .then(response => {
+              //   if (!response.ok) {
+              //     throw new Error('Network response was not ok');
+              //   }
+              //   return response.json();
+              // })
+              // .then(data => {
+              //   console.log('Success:', data);
+              //   // Redirect to the app details page if needed
+              //   window.location.href = (apiUrl, {
+              //   method: 'GET',
+              //   headers: {
+              //     'Authorization': `Bearer ${{ access_token }}`,
+              //     'Content-Type': 'application/json'
+              //   }
+              // });
+              // })
+              // .catch(error => {
+              //   console.error('Error:', error);
+              // });
+          }
+      });
+    </script>
+    
+  </body>
+</html>

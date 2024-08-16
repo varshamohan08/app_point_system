@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <title>{% block title %}My Application{% endblock %}</title>
+
+    <style>
+        body {
+            height: 94vh;
+            margin: 0;
+            scrollbar-width: thin;
+        }
+        /* image drop */
+        .image-upload{
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .image-upload input {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                opacity: 0;
+            }
+        .upload-field {
+            display: block;
+            /* background: #F4FAFE; */
+            /* padding: 12px; */
+            border-radius: 11px;
+
+        }
+
+        .upload-field .file-thumbnail {
+            cursor: pointer;
+            border: 1px dashed #BBD9EC;
+            border-radius: 11px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .upload-field .file-thumbnail img {
+            width: 180px;
+        }
+
+        .upload-field .file-thumbnail h3 {
+            font-size: 12px;
+            color: #000000;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .upload-field .file-thumbnail p {
+            font-size: 12px;
+            color: #9ABCD1;
+            margin-bottom: 0;
+        }
+        .sidebar {
+          position: fixed;
+          top: 5.5%;
+          /* left: -250px; */
+          width: 0;
+          height: 100%;
+          background-color: #f8f9fa;
+          transition: left 0.3s ease; /* Smooth slide-in transition */
+          z-index: 999; /* Ensures it is above the content */
+        }
+
+        /* Sidebar active state: slide in from left */
+        .sidebar.active {
+          width: 20%;
+          /* max-width: 250px; */
+        }
+
+        /* Main content: takes full width initially */
+        main {
+          transition: width 0.3s ease;
+          overflow: scroll;
+          height: -webkit-fill-available;
+          scrollbar-width: none;
+          /* margin-left: 0; */
+          /* width: 75%; */
+        }
+
+        /* Shift content to the right when sidebar is active */
+        main.shifted {
+          width: 80% !important; /* Same width as sidebar */
+          margin-left: 25%;
+        }
+        .nav-item {
+          visibility: hidden;
+        }
+        .nav-item.active {
+          visibility: visible;
+        }
+        .navbar-toggler {
+          display: block !important;
+        }
+        .navbar {
+          position: sticky;
+          top: 0;
+          z-index: 1;
+        }
+        .details-image-preview {
+          max-width: 350px;;
+        }
+        .screenshot_img {
+          width: auto !important;
+          max-width: 100% !important;
+        }
+        .delete-btn {
+          width: 42px;
+          height: 42px;
+          border-radius: 50px;
+          position: absolute;
+          right: 0;
+          margin: 1%;
+          background: transparent;
+        }
+        
+    </style>
+</head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <!-- Toggler button to open sidebar -->
+        <button class="navbar-toggler" type="button" id="toggleSidebar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <!-- Dynamic Username Display -->
+        <a class="navbar-brand" id="usernameDisplay"></a>
+      </div>
+    </nav>
+    
+    <!-- Sidebar and Content -->
+    <div class="container-fluid" style="height: 100%;">
+      <div class="row h-100">
+        <!-- Sidebar -->
+        <nav id="sidebarMenu" class="sidebar bg-light active" style="height: 100%;">
+          <div class="position-sticky pt-3">
+            {% block sidebar %}
+            <!-- Include your sidebar content here -->
+            {% include 'layout.html' %}
+            {% endblock %}
+          </div>
+        </nav>
+    
+        <!-- Main content -->
+        <main id="mainContent" class="col-md-12 ms-sm-auto col-lg-12 px-md-4 mt-4 shifted">
+          {% block content %}
+          <!-- Include your page content here -->
+          {% endblock %}
+        </main>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var userName = localStorage.getItem("user_name") || 'Guest';  // Default to 'Guest' if no user_name is found
+        document.getElementById("usernameDisplay").innerText = "Hello " + userName.charAt(0).toUpperCase() + userName.slice(1);
+      });
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var userName = localStorage.getItem("user_name") || 'Guest';  // Default to 'Guest' if no user_name is found
+        document.getElementById("usernameDisplay").innerText = "Hello " + userName.charAt(0).toUpperCase() + userName.slice(1);
+    
+        // Toggle the sidebar
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+          const sidebar = document.querySelectorAll('.sidebar');
+          sidebar.forEach(item => {
+            item.classList.toggle('active');
+          });
+          const mainContent = document.getElementById('mainContent');
+          mainContent.classList.toggle('shifted'); // Toggle the content shift
+          const navItems = document.querySelectorAll('.nav-item'); // Select all elements with the class 'nav-item'
+
+          // Loop through each nav item and toggle the 'active' class
+          navItems.forEach(item => {
+            item.classList.toggle('active');
+          });
+        });
+      });
+    </script>
+    {% block scripts %}
+    <!-- Additional page-specific scripts -->
+    {% endblock %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

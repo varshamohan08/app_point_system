@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block header %}
+<h3 class="text-center mb-2">Home</h3>
+{% endblock %}
+
+{% block content %}
+<div class="container-md">
+    {% for app in appdetails %}
+    <div class="card shadow-sm p-3 bg-body rounded my-4">
+        <div class="row g-0 p-3">
+            <div class="col-md-2 col-sm-3 col-xs-12 d-flex align-items-center">
+                <img src="{{ app.icon }}" alt="{{ app.name }}" style="width: 85%;">
+            </div>
+            <div class="col-md-6 col-sm-5 col-xs-12 d-flex align-items-center">
+                <div class="card-body">
+                    <h4 class="card-title mb-0">{{ app.name }}</h4>
+                    <small class="details_link"><a href="{% url 'appdetails' %}?action=details&pk={{ app.id }}">View Details</a></small><br>
+                    <small class="edit_link"><a href="{% url 'appdetails' %}?action=edit&pk={{ app.id }}">Edit</a></small>
+                    {% if action == 'not_completed' %}<small class="task_link"><a href="{% url 'appdetails' %}?action=complete_task&pk={{ app.id }}">Complete Task</a></small>{% endif %}
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12 d-flex align-items-center justify-content-center">
+                <button type="button" class="btn btn-success w-100" disabled>{{ app.points }} POINTS</button>
+                <!-- <span>{{ app.points }}</span> -->
+            </div>
+            
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Page loaded');
+        if (localStorage.getItem('user_type') == 'admin') {
+            document.querySelectorAll('.edit_link').forEach(el => el.style.display = 'block');
+        } else {
+            document.querySelectorAll('.edit_link').forEach(el => el.style.display = 'none');
+        }
+        const email = "{{ email }}";
+        const accessToken = "{{ access_token }}";
+        const token = accessToken || localStorage.getItem('access_token');
+        const storedUserDetails = localStorage.getItem('userdetails');
+
+        console.log('22:', token);
+        if (token) {
+            console.log('s:', accessToken);
+            if (!localStorage.getItem('access_token')) {
+                localStorage.setItem('access_token', token);
+                if (email) {
+                    localStorage.setItem('user_type', "{{ user_type }}");
+                    localStorage.setItem('email', "{{ email }}");
+                    localStorage.setItem('user_name', "{{ user_name }}");
+                }
+                window.location.reload()
+            }
+            
+            const apiUrl = "{% url 'appdetails' %}";
+
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data received:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+            console.log('55:', accessToken);
+        } else {
+            console.error('No access token found');
+        }
+    });
+</script>
+{% endblock %}

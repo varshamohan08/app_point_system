@@ -1,0 +1,65 @@
+<div id="sidebarMenu" class="sidebar active">
+    <ul class="nav flex-column mt-3">
+        <li id="nav-item" class="nav-item active">
+            <a class="nav-link" href="{% url 'appdetails' %}"><i class="bi bi-house-door-fill"></i> Home</a>
+        </li>
+
+        <!-- Placeholders for admin and user links -->
+        <li id="nav-item" class="nav-item active admin-link">
+            <a class="nav-link" href="{% url 'appdetails' %}?action=add"><i class="bi bi-plus-square"></i> Add App</a>
+        </li>
+        <li id="nav-item" class="nav-item active user-link">
+            <a class="nav-link" href="{% url 'user_api' %}"><i class="bi bi-person-vcard"></i> Profile</a>
+        </li>
+        <li id="nav-item" class="nav-item active user-link">
+            <a class="nav-link" href="{% url 'appdetails' %}?action=not_completed"><i class="bi bi-list-task"></i> Tasks</a>
+        </li>
+        <li id="nav-item" class="nav-item active user-link">
+            <a class="nav-link" href="{% url 'taskdetails' %}?action=points"><i class="bi bi-database"></i> Points</a>
+        </li>
+        <li id="nav-item" class="nav-item active">
+            <a class="nav-link" id="logout-link" href="#"><i class="bi bi-power"></i> Logout</a>
+        </li>
+    </ul>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('user_type') == 'admin') {
+            document.querySelectorAll('.admin-link').forEach(el => el.style.display = 'block');
+            document.querySelectorAll('.user-link').forEach(el => el.style.display = 'none');
+        } else if (localStorage.getItem('user_type') == 'user') {
+            document.querySelectorAll('.user-link').forEach(el => el.style.display = 'block');
+            document.querySelectorAll('.admin-link').forEach(el => el.style.display = 'none');
+        }
+        else {
+            document.querySelectorAll('.user-link').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.admin-link').forEach(el => el.style.display = 'none');
+        }
+    });
+</script>
+
+<script>
+    document.getElementById('logout-link').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        localStorage.clear();
+
+        fetch("{% url 'logout' %}", {
+            method: 'GET'
+            // headers: {
+            //     'Content-Type': 'application/json',
+            //     'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token if needed
+            // }
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = "{% url 'login' %}";
+            } else {
+                console.error('Logout failed');
+            }
+        }).catch(error => {
+            console.error('An error occurred:', error);
+        });
+    });
+</script>
+

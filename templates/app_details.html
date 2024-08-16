@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container p-4">
+    {% if action == 'details' %}
+    <div class="row justify-content-center">
+        <img class="details-image-preview rounded-2" src="{{ app.icon }}" alt="App Icon">
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6 col-sm-12">
+            <label class="fw-light fs-6" for="app_title"><small>Title</small></label>
+            <p class="text-break" id="app_title">{{app.name}}</p>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <label class="fw-light fs-6" for="app_link"><small>Download Link</small></label>
+            <p class="text-break" id="app_link">{{app.download_link}}</p>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6 col-sm-12">
+            <label class="fw-light fs-6" for="category"><small>Category</small></label>
+            <p class="text-break" id="category">{{app.category.name}}</p>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <label class="fw-light fs-6" for="sub_category"><small>Sub Category</small></label>
+            <p class="text-break" id="sub_category">{{app.sub_category.name}}</p>
+        </div>
+    </div>
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-6 col-sm-12">
+            <button class="btn btn-success w-100" disabled>{{ app.points }} POINTS</button>
+        </div>
+    </div>
+    {% endif %}
+    {% if action == 'complete_task' %}
+    <div class="card">
+        <div class="row g-0 p-3">
+            <div class="col-md-2 col-sm-3 col-xs-12 d-flex align-items-center">
+                <img src="{{ app.icon }}" alt="{{ app.name }}" style="width: 100%;">
+            </div>
+            <div class="col-md-6 col-sm-5 col-xs-12">
+                <div class="card-body">
+                    <h4 class="card-title mb-0">{{ app.name }}</h4>
+                    <small class="details_link"><a href="{{ app.download_link }}">{{ app.download_link }}</a></small><br>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12 d-flex align-items-center justify-content-center">
+                <button type="button" class="btn btn-success w-100" disabled>{{ app.points }} POINTS</button>
+                <!-- <span>{{ app.points }}</span> -->
+            </div>
+            
+        </div>
+        <div class="row g-0 p-3">
+            <form method="post" enctype="multipart/form-data" action="{% url 'taskdetails' %}">
+                {% csrf_token %}
+                <div class="row">{{app.id}}
+                    <div class="d-none" >
+                        <label for="app_id" class="form-label">App Id</label>
+                        <input type="text" class="form-control" id="app_id" name="app_id" value="{{app.id}}">
+                    </div>
+                    <div class="image-upload my-3">
+                        <input type="file" name="screenshot" id="screenshot" onchange="fileValue(this)">
+                        <label for="screenshot" class="upload-field" id="file-label">
+                            <div class="file-thumbnail">
+                                <img id="image-preview" src="https://www.btklsby.go.id/images/placeholder/basic.png" alt="" class="screenshot_img">
+                                <h3 id="filename">
+                                    Upload screen shots to complete the task
+                                </h3>
+                                <p>Supports JPG, PNG, SVG</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary">Upload Screenshot</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% if alert %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Page loaded');
+    });
+
+    function fileValue(value) {
+        var path = value.value;
+        var extension = path.split('.').pop();
+        
+        if (extension === "jpg" || extension === "svg" || extension === "jpeg" || extension === "png" || extension === "gif") {
+            var file = value.files[0];
+            var img = new Image();
+
+            img.onload = function() {
+                    document.getElementById('image-preview').src = window.URL.createObjectURL(file);
+                    var filename = path.replace(/^.*[\\\/]/, '').split('.').slice(0, -1).join('.');
+                    document.getElementById("filename").innerHTML = filename;
+            };
+
+            img.src = window.URL.createObjectURL(file);
+        } else {
+            alert("File not supported. Kindly upload an image with a supported extension.");
+            value.value = "";
+        }
+    }
+</script>
+{% endblock %}

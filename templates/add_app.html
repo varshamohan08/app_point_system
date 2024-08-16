@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <form method="post" enctype="multipart/form-data" action="{% url 'appdetails' %}">
+        {% csrf_token %}
+        <div class="row">
+            <div class="image-upload my-3">
+                <input type="file" name="icon" id="icon" onchange="fileValue(this)">
+                <label for="icon" class="upload-field" id="file-label">
+                    <div class="file-thumbnail">
+                        <img id="image-preview" src="https://www.btklsby.go.id/images/placeholder/basic.png" alt="">
+                        <h3 id="filename">
+                            Drag and Drop
+                        </h3>
+                        <p>Supports JPG, PNG, SVG (Image must be 1:1 ratio)</p>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="name" class="form-label">App name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="download_link" class="form-label">App Link</label>
+                    <input type="url" class="form-control" id="download_link" name="download_link" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label for="app_categories" class="form-label">App Category</label>
+                <select id="app_categories" class="form-select" name="category" onchange="category.selected_bln ">
+                    <option selected>Choose...</option>
+                    {% for app_category in app_categories %}
+                    <option value="{{ app_category.id }}" {% if app_category.selected_bln %}disabled{% endif %}>{{ app_category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-6">
+                <label for="sub_categories" class="form-label">App Sub Category</label>
+                <select id="sub_categories" class="form-select" name="sub_category">
+                    <option selected>Choose...</option>
+                    {% for sub_category in app_categories %}
+                    <option value="{{ sub_category.id }}" {% if sub_category.selected_bln %}disabled{% endif %}>{{ sub_category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="points" class="form-label">Points</label>
+                    <input type="text" class="form-control" id="points" name="points" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Page loaded');
+    });
+
+    function fileValue(value) {
+        var path = value.value;
+        var extension = path.split('.').pop();
+        
+        if (extension === "jpg" || extension === "svg" || extension === "jpeg" || extension === "png" || extension === "gif") {
+            var file = value.files[0];
+            var img = new Image();
+
+            img.onload = function() {
+                if (this.width === this.height) {
+                    document.getElementById('image-preview').src = window.URL.createObjectURL(file);
+                    var filename = path.replace(/^.*[\\\/]/, '').split('.').slice(0, -1).join('.');
+                    document.getElementById("filename").innerHTML = filename;
+                } else {
+                    alert("Image must be in 1:1 ratio. Please upload a square image.");
+                    value.value = "";
+                }
+            };
+
+            img.src = window.URL.createObjectURL(file);
+        } else {
+            alert("File not supported. Kindly upload an image with a supported extension.");
+            value.value = "";
+        }
+    }
+</script>
+{% endblock %}
