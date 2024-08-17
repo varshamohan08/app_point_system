@@ -147,7 +147,6 @@ class AppAPI(APIView):
 
 
     def put(self, request):
-        import pdb;pdb.set_trace()
         app_id = request.GET.get("pk")
         app_instance = get_object_or_404(App, id=app_id)
         serializer = AppSerializer(app_instance, data=request.data, context={'request': request})

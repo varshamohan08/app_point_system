@@ -114,7 +114,7 @@
         fetch(form.action, {
             method: 'PUT',
             headers: {
-                'Authorization': `Bearer ${document.cookie.match(/access_token=([^;]*)/)[1]}`, // Extract access token from cookies
+                'Authorization': `Bearer ${document.cookie.match(/access_token=([^;]*)/)[1]}`,
                 // Note: 'Content-Type': 'application/json' is not required with FormData
             },
             body: formData
@@ -128,7 +128,10 @@
         .then(data => {
             console.log('Data received:', data);
             alert('App updated successfully!');
-            window.location.reload()
+            // window.location.reload()
+
+            const apiUrl = "{% url 'appdetails' %}?action=details&pk={{ app.id }}";
+            window.location.href = apiUrl
         })
         .catch(error => {
             console.error('Error:', error);

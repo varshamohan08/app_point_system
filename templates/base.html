@@ -135,8 +135,6 @@
         <button class="navbar-toggler" type="button" id="toggleSidebar">
           <span class="navbar-toggler-icon"></span>
         </button>
-    
-        <!-- Dynamic Username Display -->
         <a class="navbar-brand" id="usernameDisplay"></a>
       </div>
     </nav>
@@ -148,7 +146,6 @@
         <nav id="sidebarMenu" class="sidebar bg-light active" style="height: 100%;">
           <div class="position-sticky pt-3">
             {% block sidebar %}
-            <!-- Include your sidebar content here -->
             {% include 'layout.html' %}
             {% endblock %}
           </div>
@@ -157,7 +154,7 @@
         <!-- Main content -->
         <main id="mainContent" class="col-md-12 ms-sm-auto col-lg-12 px-md-4 mt-4 shifted">
           {% block content %}
-          <!-- Include your page content here -->
+
           {% endblock %}
         </main>
       </div>
@@ -165,13 +162,13 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        var userName = localStorage.getItem("user_name") || 'Guest';  // Default to 'Guest' if no user_name is found
+        var userName = localStorage.getItem("user_name") || 'Guest';
         document.getElementById("usernameDisplay").innerText = "Hello " + userName.charAt(0).toUpperCase() + userName.slice(1);
       });
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        var userName = localStorage.getItem("user_name") || 'Guest';  // Default to 'Guest' if no user_name is found
+        var userName = localStorage.getItem("user_name") || 'Guest';
         document.getElementById("usernameDisplay").innerText = "Hello " + userName.charAt(0).toUpperCase() + userName.slice(1);
     
         // Toggle the sidebar
@@ -181,10 +178,9 @@
             item.classList.toggle('active');
           });
           const mainContent = document.getElementById('mainContent');
-          mainContent.classList.toggle('shifted'); // Toggle the content shift
-          const navItems = document.querySelectorAll('.nav-item'); // Select all elements with the class 'nav-item'
+          mainContent.classList.toggle('shifted');
+          const navItems = document.querySelectorAll('.nav-item');
 
-          // Loop through each nav item and toggle the 'active' class
           navItems.forEach(item => {
             item.classList.toggle('active');
           });
@@ -192,7 +188,7 @@
       });
     </script>
     {% block scripts %}
-    <!-- Additional page-specific scripts -->
+
     {% endblock %}
 
     <!-- Bootstrap JS -->

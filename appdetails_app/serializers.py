@@ -40,52 +40,6 @@ class AppCategorySerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Name cannot be empty")
         return value
 
-# class AppSubCategorySerializer(serializers.ModelSerializer):
-#     created_by = UserSerializer(read_only=True)
-#     category = AppCategorySerializer(read_only=True)
-
-#     class Meta:
-#         model = AppSubCategory
-#         fields = '__all__'
-
-#     def to_representation(self, instance):
-#         representation = super().to_representation(instance)
-#         return representation
-
-#     def create(self, validated_data):
-#         request = self.context.get('request')
-        
-#         try:
-#             category = AppCategory.objects.get(id=request.data.get("category"))
-#         except AppCategory.DoesNotExist:
-#             raise serializers.ValidationError("Invalid category_id provided.")
-        
-#         validated_data['created_by'] = request.user
-#         validated_data['category'] = category
-#         instance = AppSubCategory.objects.create(**validated_data)
-#         return instance
-
-#     def update(self, instance, validated_data):
-#         request = self.context.get('request')
-#         category_id = validated_data.get("category_id")
-
-#         try:
-#             category = AppCategory.objects.get(category_id=category_id)
-#         except AppCategory.DoesNotExist:
-#             raise serializers.ValidationError("Invalid category_id provided.")
-        
-#         for attr, value in validated_data.items():
-#             setattr(instance, attr, value)
-        
-#         instance.updated_by = request.user
-#         instance.save()
-#         return instance
-
-#     def validate_name(self, value):
-#         if not value.strip():
-#             raise serializers.ValidationError("Name cannot be empty")
-#         return value
-
 
 class AppSerializer(serializers.ModelSerializer):
     created_by = UserSerializer(read_only=True)

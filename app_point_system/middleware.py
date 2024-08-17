@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from . import ins_logger
 import sys
 from django.shortcuts import redirect
@@ -30,10 +31,10 @@ class CustomExceptionHandlerMiddleware:
             current_url = resolve(request.path_info).url_name
 
             if response and response.status_code == 401 and current_url not in ['login', 'signup']:
-                return redirect('login')
+                return self.handle_unauthorized(request)
 
             elif response and response.status_code == 404:
-                return redirect('login')
+                return self.handle_not_found(request)
 
             elif response and response.status_code >= 400:
                 self.log_error(response)
@@ -42,6 +43,18 @@ class CustomExceptionHandlerMiddleware:
             self.log_exception(e)
 
         return response
+
+    def handle_unauthorized(self, request):
+        if request.is_ajax() or 'application/json' in request.headers.get('Accept', ''):
+            return JsonResponse({'error': 'Unauthorized access'}, status=401)
+        else:
+            return redirect('login')
+
+    def handle_not_found(self, request):
+        if request.is_ajax() or 'application/json' in request.headers.get('Accept', ''):
+            return JsonResponse({'error': 'Resource not found'}, status=404)
+        else:
+            return redirect('login')
 
     def log_error(self, response):
         exc_type, exc_value, exc_traceback = sys.exc_info()
