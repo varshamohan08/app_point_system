@@ -144,7 +144,7 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=480), # 8 hours, 1 day: 1440
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=480),  # 8 hours, 1 day: 1440
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,

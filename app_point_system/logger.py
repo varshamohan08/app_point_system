@@ -1,7 +1,7 @@
 import logging
 from django.conf import settings
-from datetime import datetime
 from os import path
+
 
 class ErrorLogger(object):
     def __init__(self):

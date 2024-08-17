@@ -3,6 +3,7 @@ import sys
 from django.shortcuts import redirect
 from django.urls import resolve
 
+
 class JWTTokenMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -36,10 +37,10 @@ class CustomExceptionHandlerMiddleware:
 
             elif response and response.status_code >= 400:
                 self.log_error(response)
-                
+
         except Exception as e:
             self.log_exception(e)
-        
+
         return response
 
     def log_error(self, response):
