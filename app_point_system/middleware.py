@@ -13,7 +13,8 @@ class JWTTokenMiddleware:
         current_url = resolve(request.path_info).url_name
 
         if current_url not in ['login', 'signup']:
-            token = request.COOKIES.get('access_token')
+            # print(request.session.get('access_token'), request.session['access_token'])
+            token = request.session.get('access_token')
             if token:
                 request.META['HTTP_AUTHORIZATION'] = f'Bearer {token}'
         response = self.get_response(request)

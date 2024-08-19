@@ -118,7 +118,7 @@ class AppAPI(APIView):
                     'email': request.user.email,
                     'user_name': request.user.first_name + ' ' + request.user.last_name,
                     'user_type': request.user.userdetails.user_type,
-                    'access_token': request.COOKIES.get('access_token', None) if request.COOKIES.get('access_token') else None
+                    'access_token': request.session.get('access_token', None) or None
                 }
                 return render(request, 'home.html', context)
         except:

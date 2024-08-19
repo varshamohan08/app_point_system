@@ -55,6 +55,7 @@ class userLogin(APIView):
 
 class userLogout(APIView):
     def get(self, request):
+        request.session.flush()
         logout(request)
         return Response({'details': 'Success'}, status=status.HTTP_200_OK)
 
