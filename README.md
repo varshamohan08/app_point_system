@@ -4,9 +4,6 @@ A system to manage Android apps and user points, featuring both admin and user-f
 ## Description
 The App Point System allows admin to manage apps, and assign tasks. Users can view apps, complete tasks, and upload screenshots for verification. The system is designed with REST APIs, ensuring authentication and permissions.
 
-## Visuals
-[Screencast of admin panel and user panel](https://drive.google.com/file/d/1yEV0vc-rdIO3QHHgGqsLSquzhlYj824l/view?usp=sharing)
-
 ## Installation
 Clone the repository:
 ```
