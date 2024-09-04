@@ -1,10 +1,11 @@
+### app_point_system
 ## App point system
 A system to manage Android apps and user points, featuring both admin and user-facing panels.
 
-## Description
+### Description
 The App Point System allows admin to manage apps, and assign tasks. Users can view apps, complete tasks, and upload screenshots for verification. The system is designed with REST APIs, ensuring authentication and permissions.
 
-## Installation
+### Installation
 Clone the repository:
 ```
 git clone https://gitlab.com/varshamohan08/app_point_system.git
@@ -22,7 +23,7 @@ Run the application:
 ```
 python manage.py runserver
 ```
-## Dockerization
+### Dockerization
 Build the Docker image:
 ```
 docker build -t point_app .
@@ -37,16 +38,16 @@ docker-compose up -d
 ```
 Open the application in the browser at `http://localhost:8000`.
 
-## Usage
+### Usage
 **Admin Facing** - Where admin user can add an android app as well as the number of points - earned by user for downloading the app.
 
 **User Facing** - where the user can see the apps added by the admin and the points. The user can Signup and Login, see their profiles, points they earned, points break up and tasks that should be completed. User also have the option to upload a screenshot (which includes drag and drop) for that particular task.
 
-## Author
-[Varsha Mohan](https://gitlab.com/varshamohan08)
+### Author
+[Varsha Mohan](https://github.com/varshamohan08)
 
-## License
-[MIT License](https://gitlab.com/varshamohan08/app_point_system/-/blob/353d7a2c75855f53a70ab7495d1a81db73c60869/LICENSE)
+### License
+[MIT License](LICENSE)
 
-## Project status
+### Project status
 The project is currently under development.
