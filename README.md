@@ -8,7 +8,7 @@ The App Point System allows admin to manage apps, and assign tasks. Users can vi
 ### Installation
 Clone the repository:
 ```
-git clone https://gitlab.com/varshamohan08/app_point_system.git
+git clone https://github.com/varshamohan08/app_point_system.git
 cd app_point_system
 ```
 Install dependencies:
