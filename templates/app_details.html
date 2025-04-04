@@ -3,77 +3,76 @@
 {% block content %}
 <div class="container p-4">
     {% if action == 'details' %}
-    <div class="row justify-content-center">
-        <img class="details-image-preview rounded-2" src="{{ app.icon }}" alt="App Icon">
-    </div>
-    <div class="row mt-4">
-        <div class="col-md-6 col-sm-12">
-            <label class="fw-light fs-6" for="app_title"><small>Title</small></label>
-            <p class="text-break" id="app_title">{{app.name}}</p>
+    <div class="card shadow-lg p-4 mb-5 bg-white rounded-lg text-center">
+        <div class="row justify-content-center">
+            <img class="app-image rounded-3 shadow-sm" src="{{ app.icon }}" alt="App Icon">
         </div>
-        <div class="col-md-6 col-sm-12">
-            <label class="fw-light fs-6" for="app_link"><small>Download Link</small></label>
-            <p class="text-break" id="app_link">{{app.download_link}}</p>
+        <div class="row mt-4">
+            <div class="col-md-6 col-sm-12">
+                <label class="fw-bold text-secondary"><small>Title</small></label>
+                <p class="text-break fw-medium">{{ app.name }}</p>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="fw-bold text-secondary"><small>Download Link</small></label>
+                <p class="text-break"><a href="{{ app.download_link }}" class="text-primary text-decoration-none">{{ app.download_link }}</a></p>
+            </div>
         </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col-md-6 col-sm-12">
-            <label class="fw-light fs-6" for="category"><small>Category</small></label>
-            <p class="text-break" id="category">{{app.category.name}}</p>
+        <div class="row mt-4">
+            <div class="col-md-6 col-sm-12">
+                <label class="fw-bold text-secondary"><small>Category</small></label>
+                <p class="text-break fw-medium">{{ app.category.name }}</p>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="fw-bold text-secondary"><small>Sub Category</small></label>
+                <p class="text-break fw-medium">{{ app.sub_category.name }}</p>
+            </div>
         </div>
-        <div class="col-md-6 col-sm-12">
-            <label class="fw-light fs-6" for="sub_category"><small>Sub Category</small></label>
-            <p class="text-break" id="sub_category">{{app.sub_category.name}}</p>
-        </div>
-    </div>
-    <div class="row mt-4 justify-content-center">
-        <div class="col-md-6 col-sm-12">
-            <button class="btn btn-success w-100" disabled>{{ app.points }} POINTS</button>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-6 col-sm-12">
+                <button class="btn btn-success w-100 shadow-sm" disabled>{{ app.points }} POINTS</button>
+            </div>
         </div>
     </div>
     {% endif %}
+
     {% if action == 'complete_task' %}
-    <div class="card">
-        <div class="row g-0 p-3">
+    <div class="card shadow-lg p-4">
+        <div class="row g-0">
             <div class="col-md-2 col-sm-3 col-xs-12 d-flex align-items-center">
-                <img src="{{ app.icon }}" alt="{{ app.name }}" style="width: 100%;">
+                <img src="{{ app.icon }}" alt="{{ app.name }}" class="app-image">
             </div>
             <div class="col-md-6 col-sm-5 col-xs-12">
                 <div class="card-body">
-                    <h4 class="card-title mb-0">{{ app.name }}</h4>
-                    <small class="details_link"><a href="{{ app.download_link }}">{{ app.download_link }}</a></small><br>
+                    <h4 class="card-title text-dark">{{ app.name }}</h4>
+                    <small class="details_link">
+                        <a href="{{ app.download_link }}" class="text-decoration-none text-primary">{{ app.download_link }}</a>
+                    </small>
                 </div>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-12 d-flex align-items-center justify-content-center">
-                <button type="button" class="btn btn-success w-100" disabled>{{ app.points }} POINTS</button>
-                <!-- <span>{{ app.points }}</span> -->
+                <button type="button" class="btn btn-success w-100 shadow-sm" disabled>{{ app.points }} POINTS</button>
             </div>
-            
         </div>
+
         <div class="row g-0 p-3">
             <form method="post" enctype="multipart/form-data" action="{% url 'taskdetails' %}">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="d-none" >
-                        <label for="app_id" class="form-label">App Id</label>
-                        <input type="text" class="form-control" id="app_id" name="app_id" value="{{app.id}}">
-                    </div>
+                    <input type="hidden" name="app_id" value="{{ app.id }}">
                     <div class="image-upload my-3">
                         <input type="file" name="screenshot" id="screenshot" onchange="fileValue(this)">
                         <label for="screenshot" class="upload-field" id="file-label">
                             <div class="file-thumbnail">
-                                <img id="image-preview" src="https://www.btklsby.go.id/images/placeholder/basic.png" alt="" class="screenshot_img">
-                                <h3 id="filename">
-                                    Upload screen shots to complete the task
-                                </h3>
-                                <p>Supports JPG, PNG, SVG</p>
+                                <img id="image-preview" src="https://www.btklsby.go.id/images/placeholder/basic.png" alt="" class="screenshot_img shadow-sm rounded">
+                                <h3 id="filename">Upload screenshots to complete the task</h3>
+                                <p class="text-muted">Supports JPG, PNG, SVG</p>
                             </div>
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-primary">Upload Screenshot</button>
+                        <button type="submit" class="btn btn-primary shadow-sm">Upload Screenshot</button>
                     </div>
                 </div>
             </form>
@@ -87,6 +86,60 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 {% endif %}
+<style>
+    /* General Card Styling */
+    .card {
+        border: none;
+        background: #ffffff;
+        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+    }
+
+    /* App Image */
+    .app-image {
+        width: 33%;
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Screenshot Upload */
+    .image-upload input {
+        display: none;
+    }
+
+    .upload-field {
+        cursor: pointer;
+        display: block;
+        text-align: center;
+    }
+
+    .screenshot_img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s;
+    }
+
+    .screenshot_img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Labels */
+    label {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    /* Buttons */
+    .btn {
+        font-weight: bold;
+        padding: 10px 15px;
+        border-radius: 10px;
+    }
+
+</style>
 {% endblock %}
 {% block scripts %}
 <script>

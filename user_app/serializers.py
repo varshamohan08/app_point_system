@@ -39,7 +39,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
-        user_type = validated_data.pop('user_type', 'user')
+        user_type = validated_data.pop('user_type', 'admin')
 
         instance = super().create(validated_data)
 

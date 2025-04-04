@@ -70,6 +70,81 @@
     </div>
 </form>
 </div>
+<style>
+    .container {
+        margin: 40px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        font-weight: 500;
+        color: #343a40;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 6px;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #7209b7;
+        box-shadow: 0 0 0 0.1rem rgba(114, 9, 183, 0.25);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #3a0ca3, #7209b7);
+        border: none;
+        padding: 10px 30px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #2f0991, #5c08a4);
+    }
+
+    .file-thumbnail {
+        border: 2px dashed #7209b7;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        background-color: #f9f9f9;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .file-thumbnail:hover {
+        background-color: #f0e9ff;
+    }
+
+    .file-thumbnail img {
+        width: 80px;
+        /* height: 80px; */
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .file-thumbnail h3 {
+        font-size: 1rem;
+        margin-bottom: 5px;
+        color: #3a0ca3;
+    }
+
+    .file-thumbnail p {
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    #icon {
+        display: none;
+    }
+</style>
+
 {% endblock %}
 
 {% block scripts %}

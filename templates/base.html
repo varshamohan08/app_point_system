@@ -124,20 +124,70 @@
           margin: 1%;
           background: transparent;
         }
-        
+        /* Gradient background and shadow */
+.custom-navbar {
+    background: linear-gradient(135deg, #7209b7, #3a0ca3);
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Brand (username) styling */
+.custom-navbar .navbar-brand {
+    font-size: 20px;
+    color: #fff;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.custom-navbar .navbar-brand:hover {
+    color: #ffde59;
+}
+
+/* Custom toggler icon */
+.custom-toggler {
+    border: none;
+    outline: none;
+}
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255,0.8%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Optional: add hover effect on toggler */
+.custom-toggler:hover .navbar-toggler-icon {
+    filter: brightness(1.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 18px;
+        text-align: center;
+        width: 100%;
+    }
+}
+
     </style>
 </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg custom-navbar">
       <div class="container-fluid">
-        <!-- Toggler button to open sidebar -->
-        <button class="navbar-toggler" type="button" id="toggleSidebar">
+        <button class="navbar-toggler custom-toggler" type="button" id="toggleSidebar">
           <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" id="usernameDisplay"></a>
       </div>
     </nav>
+    <!-- <nav class="navbar navbar-expand-lg custom-navbar">
+      <div class="container-fluid">
+        <button class="navbar-toggler custom-toggler" type="button" id="toggleSidebar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" id="usernameDisplay">Welcome, User</a>
+      </div>
+    </nav> -->
+    
     
     <!-- Sidebar and Content -->
     <div class="container-fluid" style="height: 100%;">

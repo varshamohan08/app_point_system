@@ -10,32 +10,95 @@
     <title>Login</title>
 
     <style>
-        body {
-            background-color: #f8f9fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .card {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-        .form-control {
-            border-radius: 5px;
-        }
-        .btn-primary {
-            width: 100%;
-            border-radius: 5px;
-        }
-        .form-check-label {
-            font-size: 0.9rem;
-        }
-    </style>
+      body {
+          background: linear-gradient(135deg, #3a0ca3, #7209b7);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+  
+      .card {
+          width: 100%;
+          max-width: 580px;
+          padding: 30px 25px;
+          background-color: #ffffff;
+          border-radius: 15px;
+          box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+          animation: fadeIn 0.6s ease-in-out;
+      }
+  
+      @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+  
+      .card h3 {
+          font-weight: 600;
+          color: #3a0ca3;
+          text-align: center;
+      }
+  
+      .form-label {
+          font-weight: 500;
+          color: #343a40;
+      }
+  
+      .form-control {
+          border-radius: 6px;
+          border: 1px solid #ced4da;
+          transition: border-color 0.3s ease-in-out;
+      }
+  
+      .form-control:focus {
+          border-color: #7209b7;
+          box-shadow: 0 0 0 0.1rem rgba(114, 9, 183, 0.25);
+      }
+  
+      .btn-primary {
+          width: 100%;
+          border-radius: 6px;
+          font-weight: 500;
+          background: linear-gradient(135deg, #3a0ca3, #7209b7);
+          border: none;
+          transition: background 0.3s ease-in-out;
+      }
+  
+      .btn-primary:hover {
+          background: linear-gradient(135deg, #2f0991, #5c08a4);
+      }
+  
+      .form-check-label {
+          font-size: 0.9rem;
+          display: block;
+          margin-top: 10px;
+          text-align: center;
+      }
+  
+      .form-check-label a {
+          color: #7209b7;
+          text-decoration: none;
+      }
+  
+      .form-check-label a:hover {
+          text-decoration: underline;
+      }
+  
+      .alert {
+          font-size: 0.9rem;
+          padding: 0.75rem 1rem;
+          margin-bottom: 1rem;
+      }
+  
+      @media (max-width: 480px) {
+          .card {
+              padding: 20px 15px;
+          }
+      }
+  </style>
+  
   </head>
   <body>
     <div class="card">

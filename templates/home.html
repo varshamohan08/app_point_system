@@ -11,7 +11,7 @@ Home
 {% block content %}
 <div class="container-md">
     {% for app in appdetails %}
-    <div class="card shadow-sm p-3 bg-body rounded my-4">
+    <div class="card shadow p-3 bg-body my-4">
         <div class="row g-0 p-3">
             <div class="col-md-2 col-sm-3 col-xs-12 d-flex align-items-center">
                 <img src="{{ app.icon }}" alt="{{ app.name }}" style="width: 85%;">
@@ -33,6 +33,65 @@ Home
     </div>
     {% endfor %}
 </div>
+
+<style>
+    .card {
+        border-radius: 1rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        background: #ffffff;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .card img {
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        object-fit: cover;
+        max-height: 100px;
+    }
+
+    .card-body h4 {
+        font-weight: 600;
+        color: #3a0ca3;
+    }
+
+    .card-body small a {
+        color: #5c5c5c;
+        font-weight: 500;
+        text-decoration: none;
+        margin-right: 10px;
+        transition: color 0.3s ease;
+    }
+
+    .card-body small a:hover {
+        color: #4361ee;
+        text-decoration: underline;
+    }
+
+    .btn-success {
+        font-weight: 600;
+        background: linear-gradient(135deg, #80ed99, #38b000);
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        transition: transform 0.2s ease-in-out;
+        border-radius: 12px;
+        font-size: 16px;
+    }
+
+    .btn-success:disabled {
+        opacity: 0.9;
+    }
+
+    .btn-success:hover {
+        transform: scale(1.03);
+    }
+
+</style>
 {% endblock %}
 
 

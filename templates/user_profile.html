@@ -10,21 +10,57 @@ User Profile
 
 {% block content %}
 <div class="container-md">
-    <div class="card shadow-sm p-3 mb-5 bg-body rounded">
+    <div class="card shadow-lg p-4 mb-5 bg-white rounded-lg text-center">
         <div class="row justify-content-center">
-            {% if user.userdetails.profile_pic %}<img class="details-image-preview rounded-2" src="{{ user.userdetails.profile_pic }}" alt="User profile picture">{% endif %}
-            {% if not user.userdetails.profile_pic %}<img class="details-image-preview rounded-2" src="{{ user.userdetails.profile_pic }}" alt="User profile picture">{% endif %}
+            <div class="col-12">
+                <img class="profile-image rounded-circle" 
+                     src="{{ user.userdetails.profile_pic|default:'/static/default-profile.png' }}" 
+                     alt="User profile picture">
+            </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-3">
             <div class="col-md-6 col-sm-12">
-                <label class="fw-light fs-6" for="app_title"><small>Name</small></label>
-                <p class="text-break" id="app_title">{{user.first_name}} {{user.last_name}}</p>
+                <label class="fw-bold text-secondary"><small>Name</small></label>
+                <p class="text-break fw-medium">{{ user.first_name }} {{ user.last_name }}</p>
             </div>
             <div class="col-md-6 col-sm-12">
-                <label class="fw-light fs-6" for="app_link"><small>Email</small></label>
-                <p class="text-break" id="app_link">{{user.email}}</p>
+                <label class="fw-bold text-secondary"><small>Email</small></label>
+                <p class="text-break fw-medium">{{ user.email }}</p>
             </div>
         </div>
     </div>
 </div>
+<style>
+    /* Card Styling */
+.card {
+    border: none;
+    background: #ffffff;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+/* Profile Image */
+.profile-image {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #6c757d;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Label Styling */
+label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Paragraph Styling */
+p {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+</style>
 {% endblock %}
